@@ -251,6 +251,23 @@ console.log('MathFunctionParams VAR', someNumbers);
 console.log('MathFunctionParams VAR * MUL', multiplyNumbers(someNumbers));
 
 /**
- * NARROWING
- * Checking type
+ * GENERICS <>
+ * Executar função sem determinar o tipo
+ * Dentro de <> pode ser colocado qqr coisa, mto comum T e U
+ * Faz referencia no parametro T[]
  */
+function arrayItems <T>(arr: T[]){
+// function arrayItems (arr: any){
+    arr.forEach((item) => {
+    // arr.forEach((item: any) => {
+        console.log(`Item: ${item}`)
+    })
+}
+
+const list1: number[] = [1, 2, 3];
+const list2: string[] = ["x", "y", "z"];
+const list3: (number | string | boolean)[] = [1, "j", true];
+
+arrayItems(list1);
+arrayItems(list2);
+arrayItems(list3);
