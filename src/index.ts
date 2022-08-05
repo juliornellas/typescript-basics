@@ -75,6 +75,7 @@ console.log(firstName.toUpperCase());
 /**
  * Tuple
  * Padronização do array
+ * Mesclar tipo diferente de dados
  */
 let tupla: [number, string, string[]] = [12, "texto", ["string 1", "string 2"]];
 console.log("Tupla",typeof tupla);
