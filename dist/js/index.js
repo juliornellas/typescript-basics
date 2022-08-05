@@ -1,5 +1,23 @@
 "use strict";
 // 1ª PARTE
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
+};
+var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+};
+var _Car_brand;
 /**
  * TSCONFIG.JSON
  *
@@ -209,3 +227,86 @@ const list3 = [1, "j", true];
 arrayItems(list1);
 arrayItems(list2);
 arrayItems(list3);
+/**
+ * Classes
+ */
+class User {
+    constructor(name, role, isApproved) {
+        this.name = name;
+        this.role = role;
+        this.isApproved = isApproved;
+    }
+    showUserName() {
+        console.log(`Username: ${this.name}`);
+    }
+    showUserRole(canShow) {
+        return canShow ?
+            console.log(`The user role is ${this.role}`) :
+            console.log('Access denied!');
+    }
+}
+const user1 = new User("Chico Bento", "Admin", true);
+console.log('Class User', user1);
+user1.showUserName();
+user1.showUserRole(true);
+console.log('Access name', user1.name);
+class Car {
+    constructor(brand, wheels) {
+        _Car_brand.set(this, void 0);
+        __classPrivateFieldSet(this, _Car_brand, brand, "f");
+        this.wheels = wheels;
+    }
+    showBrand() {
+        console.log(`The brand vehicle is ${__classPrivateFieldGet(this, _Car_brand, "f")}`);
+    }
+    showWheels() {
+        console.log(`Wheels are ${this.wheels}`);
+    }
+}
+_Car_brand = new WeakMap();
+const car = new Car('Fiat', 4);
+car.showBrand();
+// console.log(car.brand)
+car.showWheels();
+/**
+ * INHERITANCE
+ * Able to access all methods and properties from parent
+ */
+class SuperCar extends Car {
+    constructor(brand, wheels, engine) {
+        super(brand, wheels);
+        this.engine = engine;
+    }
+}
+const ford = new SuperCar('Truck', 4, 2.0);
+console.log(ford); //name is private, will not appear
+ford.showBrand();
+/**
+ * DECORATORS
+ * Add properties or methods in a class
+ * For configuration, go to: tsconfig.json file and uncomment "experimentalDecorators": true
+ * Type @ to call the decorators
+ */
+//constructor decorator
+function BaseParameters() {
+    return function (constructor) {
+        return class extends constructor {
+            constructor() {
+                super(...arguments);
+                this.id = Math.random();
+                this.createdAt = new Date();
+            }
+        };
+    };
+}
+//Call the decorator
+let Person = class Person {
+    constructor(name) {
+        this.name = name;
+    }
+};
+Person = __decorate([
+    BaseParameters()
+], Person);
+const newPerson = new Person("Magali");
+console.log(newPerson);
